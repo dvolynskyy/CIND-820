@@ -13,7 +13,7 @@ str(projectData)
 projectData[, 1:25] <- sapply(projectData[, 1:25], as.numeric)
 str(projectData)
 
-install.packages("mlbench")
+#install.packages("mlbench")
 
 library(mlbench)
 
@@ -51,9 +51,11 @@ plot_histogram(projectData)
 
 
 
-modelData <- select(projectData, !c('ID', 'BILL_AMT2', 'BILL_AMT3','BILL_AMT4','BILL_AMT5','BILL_AMT6'))
+modelData <- select(projectData, !c('ID', 'BILL_AMT1','BILL_AMT2', 'BILL_AMT3','BILL_AMT4','BILL_AMT5','BILL_AMT6'))
 
-install.packages('imbalance')
+plot_correlation(na.omit(modelData), maxcat = 5L)
+
+#install.packages('imbalance')
 library(imbalance)
 
 newSamples <- mwmote(modelData, numInstances = 10000, classAttr = "DEFAULT_PAYMENT")
@@ -65,7 +67,7 @@ set.seed(7)
 rows <- sample(nrow(newData))
 newDataShuffled <- newData[rows, ]
 
-
+plot_correlation(na.omit(newDataShuffled), maxcat = 5L)
 
 z <- newData$DEFAULT_PAYMENT
 cbind(freq=table(z), percentage=prop.table(table(z))*100)
