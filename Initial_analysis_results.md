@@ -1,11 +1,11 @@
-CIND820 - Big Data Analytics Project. Initial Results and Code
+CIND820 - Big Data Analytics Project
 ================
 
 <center>
 
 <h1>
 
-Assignment 3 (10%)
+Initial Results and Code
 
 </h1>
 
@@ -15,7 +15,7 @@ Assignment 3 (10%)
 
 <h3>
 
-\[Insert your full name\]
+Dmytro Volynskyy
 
 </h2>
 
@@ -25,7 +25,7 @@ Assignment 3 (10%)
 
 <h3>
 
-\[Insert course section & student number\]
+Section D10. Student Number - 501009454
 
 </h2>
 
@@ -477,39 +477,39 @@ summary(newSamples)
 
     ##    LIMIT_BAL           SEX          EDUCATION        MARRIAGE    
     ##  Min.   : 10000   Min.   :1.000   Min.   :1.000   Min.   :1.000  
-    ##  1st Qu.: 78283   1st Qu.:1.000   1st Qu.:1.158   1st Qu.:1.063  
-    ##  Median :158335   Median :1.000   Median :1.770   Median :1.568  
-    ##  Mean   :180416   Mean   :1.344   Mean   :1.744   Mean   :1.542  
-    ##  3rd Qu.:270000   3rd Qu.:2.000   3rd Qu.:2.000   3rd Qu.:2.000  
-    ##  Max.   :500000   Max.   :2.000   Max.   :3.900   Max.   :3.000  
+    ##  1st Qu.: 79073   1st Qu.:1.000   1st Qu.:1.148   1st Qu.:1.057  
+    ##  Median :157398   Median :1.000   Median :1.754   Median :1.578  
+    ##  Mean   :179435   Mean   :1.347   Mean   :1.741   Mean   :1.544  
+    ##  3rd Qu.:266495   3rd Qu.:2.000   3rd Qu.:2.000   3rd Qu.:2.000  
+    ##  Max.   :500000   Max.   :2.000   Max.   :3.953   Max.   :3.000  
     ##       AGE            PAY_0             PAY_2             PAY_3        
     ##  Min.   :21.00   Min.   :-2.0000   Min.   :-2.0000   Min.   :-2.0000  
     ##  1st Qu.:30.00   1st Qu.: 0.0000   1st Qu.:-1.0000   1st Qu.:-1.0000  
     ##  Median :35.00   Median : 0.0000   Median :-1.0000   Median :-1.0000  
-    ##  Mean   :35.26   Mean   : 0.2171   Mean   :-0.4778   Mean   :-0.6119  
+    ##  Mean   :35.35   Mean   : 0.1986   Mean   :-0.4825   Mean   :-0.6184  
     ##  3rd Qu.:40.00   3rd Qu.: 1.0000   3rd Qu.: 0.0000   3rd Qu.: 0.0000  
-    ##  Max.   :69.00   Max.   : 7.0000   Max.   : 6.0000   Max.   : 7.0000  
+    ##  Max.   :74.00   Max.   : 7.0000   Max.   : 6.0000   Max.   : 7.0000  
     ##      PAY_4             PAY_5             PAY_6            PAY_AMT1      
     ##  Min.   :-2.0000   Min.   :-2.0000   Min.   :-2.0000   Min.   :    0.0  
     ##  1st Qu.:-2.0000   1st Qu.:-2.0000   1st Qu.:-2.0000   1st Qu.:    0.0  
-    ##  Median :-1.0000   Median :-1.0000   Median :-1.0000   Median :  216.3  
-    ##  Mean   :-0.6757   Mean   :-0.7214   Mean   :-0.7638   Mean   :  797.5  
-    ##  3rd Qu.: 0.0000   3rd Qu.: 0.0000   3rd Qu.: 0.0000   3rd Qu.: 1059.4  
-    ##  Max.   : 7.0000   Max.   : 7.0000   Max.   : 7.0000   Max.   :28435.6  
+    ##  Median :-1.0000   Median :-1.0000   Median :-1.0000   Median :  165.2  
+    ##  Mean   :-0.6762   Mean   :-0.7285   Mean   :-0.7696   Mean   :  758.9  
+    ##  3rd Qu.: 0.0000   3rd Qu.: 0.0000   3rd Qu.: 0.0000   3rd Qu.: 1000.6  
+    ##  Max.   : 7.0000   Max.   : 7.0000   Max.   : 7.0000   Max.   :27057.9  
     ##     PAY_AMT2          PAY_AMT3           PAY_AMT4           PAY_AMT5       
     ##  Min.   :    0.0   Min.   :    0.00   Min.   :    0.00   Min.   :    0.00  
     ##  1st Qu.:    0.0   1st Qu.:    0.00   1st Qu.:    0.00   1st Qu.:    0.00  
-    ##  Median :  143.7   Median :   81.48   Median :   80.69   Median :   77.01  
-    ##  Mean   :  686.4   Mean   :  578.77   Mean   :  541.71   Mean   :  554.89  
-    ##  3rd Qu.:  897.4   3rd Qu.:  665.59   3rd Qu.:  598.25   3rd Qu.:  608.82  
-    ##  Max.   :38411.2   Max.   :47021.63   Max.   :37071.62   Max.   :27998.17  
+    ##  Median :  105.7   Median :   58.06   Median :   53.55   Median :   52.68  
+    ##  Mean   :  666.6   Mean   :  566.59   Mean   :  514.17   Mean   :  521.45  
+    ##  3rd Qu.:  841.5   3rd Qu.:  637.08   3rd Qu.:  569.54   3rd Qu.:  575.99  
+    ##  Max.   :29836.4   Max.   :83024.27   Max.   :26453.18   Max.   :20815.37  
     ##     PAY_AMT6        DEFAULT_PAYMENT
     ##  Min.   :    0.00   Min.   :1      
     ##  1st Qu.:    0.00   1st Qu.:1      
-    ##  Median :   35.85   Median :1      
-    ##  Mean   :  504.94   Mean   :1      
-    ##  3rd Qu.:  559.66   3rd Qu.:1      
-    ##  Max.   :41883.52   Max.   :1
+    ##  Median :   12.79   Median :1      
+    ##  Mean   :  484.95   Mean   :1      
+    ##  3rd Qu.:  509.28   3rd Qu.:1      
+    ##  Max.   :31057.07   Max.   :1
 
 ## Merge newly created records with an original dataset
 
