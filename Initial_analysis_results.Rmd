@@ -1,10 +1,10 @@
 ---
-title: "CIND820 - Big Data Analytics Project. Initial Results and Code"
+title: "CIND820 - Big Data Analytics Project"
 output: github_document
 ---
-<center> <h1> Assignment 3 (10%) </h1> </center>
-<center>  <h3> [Insert your full name] </h2> </center>
-<center> <h3> [Insert course section & student number] </h2> </center>
+<center> <h1> Initial Results and Code </h1> </center>
+<center>  <h3> Dmytro Volynskyy </h2> </center>
+<center> <h3> Section D10. Student Number - 501009454 </h2> </center>
 ---
 
 
