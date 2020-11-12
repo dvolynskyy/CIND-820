@@ -1,0 +1,179 @@
+---
+title: <center> <h1> "CIND820 - Big Data Analytics Project" </h1> </center>
+output: html_document
+---
+<center> <h1> Initial Results and Code </h1> </center>
+<center>  <h3> Dmytro Volynskyy </h2> </center>
+<center> <h3> Section D10. Student Number - 501009454 </h2> </center>
+---
+
+<center> <h2> Initial Dataset Analysis </h2> </center>
+
+<style>  
+  p {  
+    text-indent: 2.0em;  
+  }  
+  div { text-align: justify; }
+</style>
+      
+The very first and important step of the machine learning process while performing any data analysis it to prepare data for its proper future interpretation. Clean data can notably increase the accuracy of any model. Usually we start that in R with reading a dataset file using a command ‘read.csv’. We want to have the headers as in original file and do not have factor values. For this ‘header’ argument is set to ‘True’ and ‘stringAsFactors’ – to ‘False’.
+
+```{r}
+projectData = read.csv("D:\\Study\\CIND820 - Big Data Analytics Project\\Project\\Initial Analysis\\credit_card.csv", header = TRUE,  sep = ",", stringsAsFactors = FALSE)
+```
+
+Now we can start investigating our data. We would need to learn the shape, size, type and general layout of the data that we have. A command ‘head’ shows us the first six rows and gives us understanding how the dataset looks like.
+
+```{r}
+head(projectData)
+```
+
+There are twenty-five columns describing attributes of each credit card customer in terms of his/her sex, education, age, payment history, bill amount and status of payments in different months (see table 1 from Literature Review). To avoid any complications further, our target variable ‘default.payment.next.month’ is going to be renamed to simpler name using the following code:
+
+```{r}
+colnames(projectData)[colnames(projectData)=="default.payment.next.month"] <- "DEFAULT_PAYMENT"
+head(projectData)
+```
+
+Then with ‘dim’ function we can easily check that the given data set has 30000 records in it. Using a standard command ‘str’ we may find out of what type is each variable
+
+```{r}
+dim(projectData)
+str(projectData)
+```
+
+Install CRAN package 'mlbench' and activate it
+
+```{r}
+#install.packages("mlbench")
+library(mlbench)
+```
+
+
+Since we have a classification problem in this project, there is a necessity to know the proportion of instances that belong to each class label. This is important because it may highlight an imbalance in the data, that if severe may need to be addressed with rebalancing techniques. The code below creates a useful table showing the number of instances that belong to each class as well as the percentage that this represents from the entire dataset:
+
+```{r}
+y <- projectData$DEFAULT_PAYMENT
+cbind(freq=table(y), percentage=prop.table(table(y))*100)
+```
+  
+As it is seen, the given dataset has rather imbalanced data where class ‘0’ is presented triple as much as class ‘1’. Due to this we will need to address this issue with specific methods.
+
+
+<center> <h2> Exploratory Data Analysis </h2> </center>
+
+
+Applying the summary() function to a data frame will return the summary showing main descriptive statistics (min, 25 percentile, median, mean, 75 percentile, max) for all numeric values. It also indicates, if applicable, the number of missing values for an attribute (marked NA). In this case there no missing values at all.
+
+```{r}
+summary(projectData)
+```
+
+Comparing details of data description from table 1 and the results of summary() function, it is seen that two attributes, Education and Marriage, have categories either not included in the dataset description or are meaningless.
+
+From the data description received in table 1 we can see that the Education varible has the following categories: 1=graduate school, 2=university, 3=high school, 4=others, 5=unknown, 6=unknown. In addition, we can observe that this attribute holds 0 number as its value, which is not described in the dataset. We may assume that these 0 values along with 5 and 6 can be categorized under value 4 (other).  
+A similar situation is for Marriage variable which holds values like 1=married, 2=single, 3 =others. Since the category 0 hasn't been defined anywhere, we will include it in the ‘others’ category marked as 3.
+
+Activating libraries of 'DataExplorer' and 'dplyr' packages
+
+```{r}
+library(DataExplorer)
+library(dplyr)
+```
+
+Find distribution of Education and Mariage variables with not described categories in data description. Assigning those to meaningful ones
+
+```{r}
+projectData %>% count(EDUCATION, sort = FALSE)
+projectData %>% count(MARRIAGE, sort = FALSE)
+
+projectData$EDUCATION[projectData$EDUCATION == 0] <- 4
+projectData$EDUCATION[projectData$EDUCATION == 5] <- 4
+projectData$EDUCATION[projectData$EDUCATION == 6] <- 4
+
+projectData$MARRIAGE[projectData$MARRIAGE == 0] <- 3
+
+projectData %>% count(EDUCATION, sort = FALSE)
+projectData %>% count(MARRIAGE, sort = FALSE)
+```
+
+Another important aspect is to explore how the attributes related between each other. For this purpose, the correlation of each pair of numeric attributes will be considered.
+
+```{r fig.align="center", fig.height=9, fig.width=9}
+correlations <- cor(projectData[,2:25])
+print(correlations)
+
+
+plot_correlation(na.omit(projectData), maxcat = 5L)
+```
+    
+From this heat map it is seen that particular variables like BILL_AMT1, BILL_AMT2, BILL_AMT3, BILL_AMT4, BILL_AMT5, BILL_AMT6 have a very weak correlation with a class attribute and thus have no impact on a final outcome. Due to this we will not include them in a machine learning model.
+
+Next we create a histogram for each attribute and thus performing a univariate analysis of them:
+
+```{r, fig.align="center", fig.height=9, fig.width=9}
+plot_histogram(projectData)
+```
+    
+The above graphs show that all PAY variables are skewed to the right. Otherwise there are no specific dependencies to highlight.
+
+<center> <h2> Pre-Processing and Feature Selection </h2> </center>
+
+Next step is to prepare dataset for modelling. As it was mentioned above BILL_AMT1, BILL_AMT2, BILL_AMT3, BILL_AMT4, BILL_AMT5, BILL_AMT6 attributes have no impact on a class variable and should be deleted from it. That is done with the following code
+
+```{r}
+modelData <- select(projectData, !c('ID', 'BILL_AMT1','BILL_AMT2', 'BILL_AMT3','BILL_AMT4','BILL_AMT5','BILL_AMT6'))
+```
+
+Plot a new heat map of correlations after removing attributes from the dataset
+
+```{r, fig.align="center", fig.height=9, fig.width=9}
+plot_correlation(na.omit(modelData), maxcat = 5L)
+```
+
+It is seen that even after removing specific attributes, all other ones have not so high correlation class variable. Due to that we will need to analyze and interpret very carefully the performance of machine learning modelling having almost independent variables.
+
+Installing and activating a CRAN package 'imbalance'
+
+```{r}
+#install.packages('imbalance')
+library(imbalance)
+```
+
+Further we need to deal with class imbalance. For this reason, a CRAN package ‘Imbalance’ is installed. Specifically, a majority weighted minority oversampling technique (MWMOTE) for imbalance dataset will be used. It is a modification for SMOTE technique which overcomes some of the problems of the SMOTE technique when there are noisy instances, in which case SMOTE would generate more noisy instances out of them. Oversampling of the dataset with new instances of class variable '1' using MWMOTE technique is done using the folowing code:
+
+```{r}
+newSamples <- mwmote(modelData, numInstances = 10000, classAttr = "DEFAULT_PAYMENT")
+summary(newSamples)
+```
+
+After creating new artificial records as a separate dataframe we use function ‘rbind’ to merge two datasets
+
+```{r}
+newData<-rbind(modelData, newSamples)
+```
+
+Then we shuffle it in order not to have only the records of the same class outcome in each fold of the future k-fold cross validation modelling.
+
+```{r}
+set.seed(7)
+rows <- sample(nrow(newData))
+newDataShuffled <- newData[rows, ]
+```
+
+Another correlation heat map is created to see how new instances in a dataset affected dependencies between each other.
+
+```{r, fig.align="center", fig.height=9, fig.width=9}
+plot_correlation(na.omit(newDataShuffled), maxcat = 5L)
+```
+    
+It is vividly seen that the values for PAY variables decreased and PAY_AMT increased a little bit in comparison with previous heat map. Nevertheless, we assume that this change is not critical and will not biased the model itself very much.
+
+Then we check again in what proportion the records with different class value are presented in a resulting dataset
+
+```{r}
+z <- newData$DEFAULT_PAYMENT
+cbind(freq=table(z), percentage=prop.table(table(z))*100)
+```
+
+There is a ratio of 58.41% to 41.59% of instances that belong to class ‘0’ and class ‘1’ respectively. Due to this we assume that our dataset is balanced now and we can proceed to the machine learning modelling.
