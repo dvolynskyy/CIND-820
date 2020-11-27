@@ -348,7 +348,7 @@ predRF <- prediction(defaultPredRF[,1], test.set$DEFAULT_PAYMENT)
 perfRF <- performance(predRF, "tpr", "fpr")
 
 plot(perfRF, main = "ROC curves for Random Forest and Naive Bayes before and after scaling attributes",
-     col = 'black')
+     col = 'black', lty = 1, lwd=6)
 
 # Naive Bayes method without scaling
 
@@ -356,7 +356,7 @@ predNB <- prediction(defaultPredNB[,1], test.set$DEFAULT_PAYMENT)
 
 perfNB <- performance(predNB, "tpr", "fpr")
 
-plot(perfNB, add = TRUE, col = "red")
+plot(perfNB, add = TRUE, col = "red", lty = 1, lwd=6)
 
 
 # Random Forest method with scaling
@@ -365,7 +365,7 @@ predRFsc <- prediction(defaultPredRFsc[,1], test.set$DEFAULT_PAYMENT)
 
 perfRFsc <- performance(predRFsc, "tpr", "fpr")
 
-plot(perfRFsc, add = TRUE, col = 'green')
+plot(perfRFsc, add = TRUE, col = 'green', lty = 1, lwd=4)
 
 
 # Naive Bayes method with scaling
@@ -374,14 +374,14 @@ predNBsc <- prediction(defaultPredNBsc[,1], test.set$DEFAULT_PAYMENT)
 
 perfNBsc <- performance(predNBsc, "tpr", "fpr")
 
-plot(perfNBsc, add = TRUE, col = "blue")
+plot(perfNBsc, add = TRUE, col = "blue", lty = 1, lwd=4)
 
 # Add legends to the plot
 
 legend("right", legend = c("Random Forest w/out scaling", "Naive Bayes w/out scaling", 
                            "Random Forest after scaling", "Naive Bayes after scaling"), 
        bty = "n", cex = 1, lty = 1,
-       col = c("black", "red", "green", "blue"))
+       col = c("black", "red", "green", "blue"), lwd = c(2,2,2,2))
 ```
 
 ```{r}
